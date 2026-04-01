@@ -1,6 +1,6 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // Select all project cards
     const cards = document.querySelectorAll('.project-card');
 
@@ -13,23 +13,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add the 'show' class when it enters the screen
                 entry.target.classList.add('show');
-                // Stop observing once it's visible (optional)
                 observer.unobserve(entry.target);
             }
         });
     }, options);
-    
 
-    // Tell the observer to watch each card
     cards.forEach(card => {
         observer.observe(card);
     });
 });
+
 function copyEmail() {
-    const email = document.getElementById('emailAddr').innerText;
-    navigator.clipboard.writeText(email).then(() => {
-        alert("Email copied to clipboard!");
+    const el = document.getElementById('emailAddr');
+    if (!el) return;
+    navigator.clipboard.writeText(el.innerText).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        if (!btn) return;
+        const original = btn.innerText;
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = original; }, 2000);
+    }).catch(() => {
+        // Fallback: select the text so the user can copy manually
+        const range = document.createRange();
+        range.selectNode(el);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
     });
-    }
+}

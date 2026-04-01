@@ -10,6 +10,10 @@
     --text-color: #1a1a1a;
     --accent-color: #007aff; /* Apple-style blue */
     --gray: #f4f4f4;
+    --border-color: #eee;
+    --text-muted: #666;
+    --text-lighter: #888;
+    --nav-bg: rgba(255, 255, 255, 0.9);
 }
 
 body {
@@ -27,7 +31,7 @@ nav {
     padding: 2rem 10%;
     position: sticky;
     top: 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     z-index: 1000;
 }
@@ -94,6 +98,10 @@ nav {
     border-radius: 5px;
     font-weight: 600;
     transition: transform 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .btn:hover {
@@ -110,50 +118,51 @@ nav {
     margin-bottom: 3rem;
 }
 
-/* Update this section in your style.css */
 .project-grid {
     display: grid;
-    /* This tells the grid: "Fit as many as possible, but make them at least 300px wide" */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 2rem; /* Reduced gap slightly to help things fit */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
-/* Ensure images within cards maintain a consistent height for a clean row look */
-.project-card img {
-    width: 100%;
-    height: 250px; /* Fixed height makes the row look uniform */
-    object-fit: cover; /* Prevents stretching */
-}
+/* Project Card — consolidated */
 .project-card {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    transition: 0.3s;
-}
-/* Initial state: Hidden and slightly lower */
-.project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s ease-out;
 }
 
-/* State when scrolled into view */
 .project-card.show {
     opacity: 1;
     transform: translateY(0);
 }
+
 .project-card:hover {
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
-.project-img-placeholder img {
+.project-card img {
     width: 100%;
-    height: 300px;
+    height: 250px;
     object-fit: cover;
+}
+
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .project-info {
     padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .view-link {
@@ -163,45 +172,28 @@ nav {
     color: var(--accent-color);
     font-weight: bold;
 }
-.project-group {
-    padding: 4rem 10%;
-}
 
 .hs-section {
-    background-color: #fafafa; /* Subtle shift in background to show a new 'era' */
-    border-top: 1px solid #eee;
+    background-color: #fafafa;
+    border-top: 1px solid var(--border-color);
 }
 
-.subtitle {
-    color: #666;
-    margin-bottom: 2rem;
-    font-style: italic;
-}
-
-/* Optional: Make HS projects look 'archived' until hovered */
 .hs-section .project-card img {
     filter: grayscale(40%);
-    transition: 0.3s;
-}
-.project-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Makes all cards in a row the same height */
-}
-.project-link {
-    text-decoration: none;
-    color: inherit;
-    display: block; /* Makes the whole area clickable */
-}
-.project-info {
-    flex-grow: 1; /* Pushes the content to fill the space */
-    display: flex;
-    flex-direction: column;
+    transition: filter 0.3s ease;
 }
 
 .hs-section .project-card:hover img {
     filter: grayscale(0%);
 }
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+/* Project Detail Page */
 .detail-container {
     padding: 2rem 10%;
     max-width: 1200px;
@@ -233,7 +225,7 @@ nav {
 
 .description h2 {
     margin: 2rem 0 1rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
 }
 
@@ -241,19 +233,21 @@ nav {
     display: inline-block;
     margin-top: 4rem;
     text-decoration: none;
-    color: #888;
+    color: var(--text-lighter);
     transition: color 0.3s;
 }
 
 .back-btn:hover {
     color: var(--text-color);
 }
+
 /* Footer */
 footer {
     text-align: center;
     padding: 5rem 0;
 }
-/* Layout Tweaks for the 'About' Page */
+
+/* About Page */
 .about-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -278,7 +272,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--border-color);
     margin-bottom: 3rem;
     padding-bottom: 1rem;
 }
@@ -290,7 +284,7 @@ footer {
 }
 
 .era-header span {
-    color: #888;
+    color: var(--text-lighter);
     font-family: monospace;
 }
 
@@ -298,28 +292,12 @@ footer {
     background-color: #fcfcfc;
 }
 
-/* Scroll Animation classes from previous step remain the same */
-
-/* Responsive for Mobile */
-@media (max-width: 768px) {
-    .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-    }
-    .hero-content h1 {
-        font-size: 2.5rem;
-        margin-top: 2rem;
-    }
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-}
-/* Contact Page Styling */
+/* Contact Page */
 .contact-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 70vh; /* Centers the content vertically */
+    min-height: 70vh;
     padding: 2rem 10%;
     text-align: center;
 }
@@ -331,7 +309,7 @@ footer {
 
 .contact-hero p {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto 3rem auto;
 }
@@ -341,7 +319,7 @@ footer {
     padding: 3rem;
     border-radius: 20px;
     display: inline-block;
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
 }
 
 .email-link {
@@ -362,4 +340,78 @@ footer {
     margin-top: 1rem;
     font-size: 0.9rem !important;
     color: #999 !important;
+}
+
+/* Responsive — Tablet */
+@media (max-width: 1024px) {
+    .about-hero {
+        gap: 2rem;
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+
+/* Responsive — Mobile */
+@media (max-width: 768px) {
+    nav {
+        padding: 1.5rem 5%;
+    }
+
+    .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 3rem 5%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-top: 2rem;
+    }
+
+    .about-hero {
+        grid-template-columns: 1fr;
+        padding: 3rem 5%;
+        gap: 2rem;
+    }
+
+    .era-section {
+        padding: 3rem 5%;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-container {
+        padding: 2rem 5%;
+    }
+
+    .detail-content h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Responsive — Small phones */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .contact-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .email-link {
+        font-size: 1.3rem;
+    }
+
+    .email-box {
+        padding: 2rem 1.5rem;
+    }
+
+    .era-header h2 {
+        font-size: 1.4rem;
+    }
 }

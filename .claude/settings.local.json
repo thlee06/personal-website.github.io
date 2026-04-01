@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r viewport C:UserstheodOneDriveDocumentsVsCodePersonal ProjectsPortfolioWebsite/*.html)",
+      "Bash(ls C:UserstheodOneDriveDocumentsVsCodePersonal ProjectsPortfolioWebsite/*.html)",
+      "Bash(cd:*)"
+    ]
+  }
+}
