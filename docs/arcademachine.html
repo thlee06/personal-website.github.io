@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arcade Machine | Theodore Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+    <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
+    <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li> </ul>
+</nav>
+
+    <main class="detail-container">
+        <div class="detail-hero">
+            <img src="photos/arcademachine.png" alt="Arcade Machine PCB">
+        </div>
+
+        <section class="detail-content">
+            <h1>Arcade Machine</h1>
+            <p class="tagline">A simplified arcade machine</p>
+            
+            <div class="description">
+                <h2>Project Overview</h2>
+                <p>
+                    For my final project in an introductory Art of Engineering Course, I worked with a team of 5 people to design an arcade machine that could run numerous arcade games.
+                </p>
+                
+                <h2>Technical Details</h2>
+                <p>
+                    Growing up, seeing my Grandparents was always a treat. Not just for the company, but also for the arcade machine in their basement. For a final, open form project in my Art of Engineering class, I decided to recreate that.
+                    My role in this project was integrating a microcontroller. Finding a suitable one was difficult, as we had to balance finding a microcontroller which ran on 5V logic, had enough GPIO pins to run the buttons and joysticks, and was powerful enough to run the games we wanted to run. In the end, I elected to use the Arduino Mega, which had 54 digital I/O pins, and ran on 5V logic. 
+                    I also had to design the circuitry for everything. Because the turnaround on the project was so tight, I could not use a custom PCB, and instead had to use a perfBoard, and solder everything by hand. This was not a challenge, as I had spent years doing it in my bedroom. However, I did have to design the circuitry in a way that was easy to solder, and that would not cause any issues with noise or interference. I also had to design the circuitry in a way that would allow for easy troubleshooting, as we were on a tight deadline, and could not afford to have any issues that would take a long time to fix. 
+                </p>
+            </div>
+            
+            <a href="projects.html" class="back-btn">← Back to Projects</a>
+        </section>
+    </main>
+</body>
+</html>

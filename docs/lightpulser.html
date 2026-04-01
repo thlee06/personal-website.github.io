@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Light Pulser | Theodore Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+    <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
+    <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li> </ul>
+</nav>
+
+    <main class="detail-container">
+        <div class="detail-hero">
+            <img src="photos/lightpulser-page.png" alt="Light Pulser">
+        </div>
+
+        <section class="detail-content">
+            <h1>Light Pulser</h1>
+            <p class="tagline">A integrated analog processing and microcontroller project</p>
+            
+            <div class="description">
+                <h2>Project Overview</h2>
+                <p>
+                    A device that flashes lights in response to sound.
+                </p>
+                
+                <h2>Technical Details</h2>
+                <p>
+                   I have always loved concert visuals. The way the lights pulse and change color in repsonse to the music is mesmserizing to me. I wanted to create a small device that could replicate this in my room.
+                   At this point in my circuitry journey, I understood the basic of both digital and analog circuits, but I had never integrated the two. I started by buying a strip of LED lights, which came with a small controller PCB. Decoding this proved challenging, as the Datasheet was in Chinese, and the Serial pins had been disabled by the manufacturer. I was a bit fed up at this point, and just scratched my way into the signal line for the lights, attaching my own nano's output pins to the controller.
+                   Next, I had to find a way to tap into the music itself without affecting the quality of the signal. I accomplished this using a tl072, an op amp with a famously high impedance. I used this to create a simple non inverting amplifier, which I could use to boost the signal from my aux cable to a level that the arduino could read.
+                   Finally, I biased the signal up to 2.5 volts (a level the arduino could read.) Using the Fast Fourier Transform library, I was able to analye the frequency content of the signal, and map the frequency of the music to an RGB spectrum.
+                
+                </p>
+            </div>
+            
+            <a href="projects.html" class="back-btn">← Back to Projects</a>
+        </section>
+    </main>
+</body>
+</html>
