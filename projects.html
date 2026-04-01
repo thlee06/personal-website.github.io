@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Archive | Theodore Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="archive" id="archive"></main>
+
+    <script src="projects.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const archive = document.getElementById('archive');
+
+        ERAS.forEach(era => {
+            const projects = PROJECTS.filter(p => p.era === era.id);
+            if (!projects.length) return;
+
+            const section = document.createElement('section');
+            section.className = 'era-section' + (era.cssClass ? ' ' + era.cssClass : '');
+
+            section.innerHTML = `
+                <div class="era-header">
+                    <h2>${era.label}</h2>
+                    <span>${era.years}</span>
+                </div>
+                <div class="project-grid">
+                    ${projects.map(p => `
+                        <a href="project.html?id=${p.id}" class="project-link">
+                            <div class="project-card">
+                                <img src="${p.thumbnail}" alt="${p.thumbnailAlt}">
+                                <div class="project-info">
+                                    <h3>${p.title}</h3>
+                                    <p>${p.cardText}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `).join('')}
+                </div>
+            `;
+
+            archive.appendChild(section);
+        });
+    </script>
+</body>
+</html>

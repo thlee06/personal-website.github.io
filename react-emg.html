@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReactEMG | Theodore Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+    <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
+    <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li> </ul>
+</nav>
+
+    <main class="detail-container">
+        <div class="detail-hero">
+            <img src="photos/BLEPCB.png" alt="ReactEMG High aRes">
+        </div>
+
+        <section class="detail-content">
+            <h1>ReactEMG</h1>
+            <p class="tagline">Low-level signal processing & PCB Design</p>
+            
+            <div class="description">
+                <h2>Project Overview</h2>
+                <p>
+                    ReactEMG, a method for real-time intent detection using surface electromyography (sEMG). The approach models neuromuscular activity as a continuous temporal segmentation problem rather than a static classification task, enabling the system to detect both the onset and persistence of user actions with low latency. A masked self-supervised learning strategy is used during training to improve robustness to noise, inter-user variability, and limited labeled data, allowing the model to learn stable representations of muscle activation patterns. This design supports responsive human–machine interfaces, such as prosthetic or assistive robotic control, where reliable, fast interpretation of motor intent is critical.
+                </p>
+                
+                <h2>Technical Details</h2>
+                <p>
+                    My role as the sole PCB designer for this project was to interface the server's commands with the motors on the hand. This involved designing a custom board with a microcontroller, two motor drivers, connection pins, and a stable power supply.
+                    The first challenge I encountered was selecting the appropriate motor drivers and calibrating the torque parameters to ensure smooth and responsive movement of the hand. I also had to carefully manage power distribution and calculate trace widths to handle the high current requirements while maintaining thermal stability. For this, I selected the DRV8871 motor driver, which provided the necessary current handling capabilities and built-in protection features. 
+                    Additionally, I had to ensure proper power supply for the module. Becuase we were using a low power bluetooth microcontroller, stable, clean power was essential to our operation. Because of the relatively low voltage gap between the 12V Power in and the 9V max Vin of the MCU, I elected to use a low current linear voltge regulator.
+                </p>
+            </div>
+            
+            <a href="projects.html" class="back-btn">← Back to Projects</a>
+        </section>
+    </main>
+</body>
+</html>

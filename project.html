@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project | Theodore Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="detail-container">
+        <div class="detail-hero">
+            <img id="hero-img" src="" alt="">
+        </div>
+
+        <section class="detail-content">
+            <h1 id="project-title"></h1>
+            <p class="tagline" id="project-tagline"></p>
+
+            <div class="description">
+                <h2>Project Overview</h2>
+                <div id="project-overview"></div>
+
+                <h2>Technical Details</h2>
+                <div id="project-technical"></div>
+            </div>
+
+            <a href="projects.html" class="back-btn">← Back to Projects</a>
+        </section>
+    </main>
+
+    <script src="projects.js"></script>
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        const project = PROJECTS.find(p => p.id === id);
+
+        if (project) {
+            document.title = project.title + ' | Theodore Lee';
+            document.getElementById('hero-img').src = project.heroImage;
+            document.getElementById('hero-img').alt = project.heroAlt;
+            document.getElementById('project-title').textContent = project.title;
+            document.getElementById('project-tagline').textContent = project.tagline;
+            document.getElementById('project-overview').innerHTML = project.overview;
+            document.getElementById('project-technical').innerHTML = project.technical;
+        } else {
+            document.querySelector('.detail-container').innerHTML =
+                '<p style="padding:2rem">Project not found. <a href="projects.html">← Back to Projects</a></p>';
+        }
+    </script>
+</body>
+</html>
