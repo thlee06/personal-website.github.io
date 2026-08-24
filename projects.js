@@ -1,40 +1,79 @@
 // ─── Era definitions ──────────────────────────────────────────────────────────
-// To add a new era, append an object here.
 const ERAS = [
   { id: "college",    label: "College Era",     years: "2025-Present", cssClass: "" },
   { id: "highschool", label: "High School Era",  years: "2022-2025",   cssClass: "hs-era" }
 ];
 
 // ─── Project data ─────────────────────────────────────────────────────────────
-// To add a new project:
-//   1. Add a photo to the photos/ folder.
-//   2. Append a new object below — fill in all fields.
-//   3. That's it. The listing page and detail page are generated automatically.
-//
-// Fields:
-//   id            – used in the URL: project.html?id=<id>
-//   era           – must match one of the ERAS ids above
-//   title         – displayed as the card heading and page <h1>
-//   tagline       – short subtitle on the detail page
-//   thumbnail     – image shown on the projects listing card
-//   thumbnailAlt  – alt text for the thumbnail
-//   cardText      – description shown on the listing card (plain text or HTML string)
-//   heroImage     – large image shown at the top of the detail page
-//   heroAlt       – alt text for the hero image
-//   overview      – Project Overview section content (HTML string)
-//   technical     – Technical Details section content (HTML string)
-
 const PROJECTS = [
   {
-    id: "react-emg",
+    id: "daq-board",
     era: "college",
-    title: "ReactEMG",
-    tagline: "Low-level signal processing & PCB Design",
+    title: "Multi-sensor DAQ Board",
+    tagline: "Custom PCB reading 6 thermistors, 4 load cells, a current sensor, and an RPM sensor, streaming live over WiFi with backup SD logging.",
+    date: "2025",
+    tags: ["ESP32-S3", "HX711", "MCP3208", "ACS724", "MQTT", "4-Layer"],
+    thumbnail: "photos/DAQ.JPEG",
+    thumbnailAlt: "DAQ Board with ESP32-S3 and sensor connectors",
+    cardText: "Custom PCB reading 6 thermistors, 4 load cells, a current sensor, and an RPM sensor, streaming live over WiFi with backup SD logging.",
+    heroImage: "photos/DAQ.JPEG",
+    heroAlt: "DAQ Board with ESP32-S3 and sensor connectors",
+    overview: `<p>Designed during a summer internship at Avol Aerospace, this board instruments a motor
+      thrust stand. The goal was to swap ESCs and motors quickly and compare thrust-to-efficiency
+      ratios, so the DAQ needed to read a wide sensor mix — 6 thermistors, 4 load cells, a current
+      sensor, and an RPM pickup — and stream everything to a dashboard in real time.</p>`,
+    technical: `<p>The board is built around an ESP32-S3-WROOM module. Load cells are read through two
+      HX711 ADCs, the current sensor is an ACS724, and RPM is captured with a Hall effect sensor.
+      For the thermistors I added an external MCP3208 SPI ADC rather than relying on the ESP32's
+      ADC2 — on the earlier breadboard prototype, WiFi transmissions coupled noise straight into
+      the thermistor readings through ADC2's shared radio front end. Moving to a dedicated external
+      ADC solved the problem cleanly.</p>
+      <p>Data streams over MQTT to a separate dashboard application, and simultaneously logs to an
+      onboard SD card over SDMMC. The dual path means we could test in the field without a network
+      connection and still capture full-rate data. If the server drops mid-run, nothing is lost.</p>
+      <p>The final design is a 4-layer board with the sensor connectors along the edges for easy
+      hookup on the thrust stand.</p>`
+  },
+  {
+    id: "buck-converter",
+    era: "college",
+    title: "3-Channel 48 V Buck Converter",
+    tagline: "48V input supply delivering 24V, 12V, and 7V rails off a 12S LiPo, taken from component selection through bench bring up.",
+    date: "2025",
+    tags: ["LMR51430", "Power Electronics", "DFM", "2-Layer"],
+    thumbnail: "photos/buckconverter.png",
+    thumbnailAlt: "Buck converter PCB layout showing 48V to 24V, 12V, and 7V rails",
+    cardText: "48V input supply delivering 24V, 12V, and 7V rails off a 12S LiPo, taken from component selection through bench bring up.",
+    heroImage: "photos/buckconverter.png",
+    heroAlt: "Buck converter PCB layout showing 48V to 24V, 12V, and 7V rails",
+    overview: `<p>Also built at Avol Aerospace, this board powers the onboard electronics of a drone
+      from the full voltage range of a 12S LiPo pack. Three identical buck channels step the pack
+      voltage down to regulated 24 V, 12 V, and 7 V rails, each rated for roughly 4 A continuous
+      with a 5 A peak.</p>`,
+    technical: `<p>All three channels use the LMR51430. I selected inductors and output capacitors
+      myself rather than copying a reference design. This board was really an exercise in design
+      for manufacturing — it may be produced in larger quantities in the future, so every component
+      choice had to consider lead times and second-source availability. That process taught me that
+      every part you pick is a dependency on a supply chain, and the fix is to choose common,
+      widely stocked components and understand your circuit well enough to swap parts when
+      needed.</p>
+      <p>The first revision did not work. Debugging traced the issue to incorrect voltage feedback
+      divider resistors. For the second revision I added overvoltage protection, reverse polarity
+      protection, and soft start. The final board achieves around 50 mV of output ripple on a
+      two-layer layout, which I was pleased with given the switching currents involved.</p>`
+  },
+  {
+    id: "myhand-ble",
+    era: "college",
+    title: "MyHand BLE",
+    tagline: "Motor driver board for an EMG skin sensing hand opener at ROAM Lab, giving stroke patients a physical actuator driven by surface signals.",
+    date: "Spring 2025",
+    tags: ["PCB Design", "DRV8871", "Bluetooth MCU", "Power Management"],
     thumbnail: "photos/reactemgthumbnail.png",
-    thumbnailAlt: "ReactEMG Project",
-    cardText: "A project by the Columbia University ROAM lab. ReactEMG is a low-level EMG signal processing system designed for stroke patients.",
+    thumbnailAlt: "MyHand BLE Project",
+    cardText: "Motor driver board for an EMG skin sensing hand opener at ROAM Lab, giving stroke patients a physical actuator driven by surface signals.",
     heroImage: "photos/BLEPCB.png",
-    heroAlt: "ReactEMG PCB",
+    heroAlt: "MyHand BLE PCB",
     overview: `<p>ReactEMG is a method for real-time intent detection using surface electromyography (sEMG).
       The approach models neuromuscular activity as a continuous temporal segmentation problem rather than
       a static classification task, enabling the system to detect both the onset and persistence of user
@@ -57,15 +96,35 @@ const PROJECTS = [
       voltage regulator.</p>`
   },
   {
+    id: "acoustic-sensing",
+    era: "college",
+    title: "Acoustic Sensing Device",
+    tagline: "ESP32-S3 board built for a Columbia PhD researcher, capturing audio through a PDM MEMS mic for an acoustic stethoscope.",
+    date: "2025",
+    tags: ["ESP32-S3", "IM67D", "PDM", "Freelance", "4-Layer"],
+    thumbnail: "",
+    thumbnailAlt: "Acoustic Sensing Device",
+    cardText: "Freelance contract: an ESP32-S3 capture board with a PDM MEMS mic, designed for a Columbia researcher's acoustic sensing application.",
+    heroImage: "",
+    heroAlt: "Acoustic Sensing Device",
+    overview: `<p>A freelance contract for a Columbia PhD researcher. The brief was a compact capture
+      board that could record high-quality audio from a PDM MEMS microphone and log it for later
+      analysis.</p>`,
+    technical: `<p>The board uses an ESP32-S3 paired with an IM67D PDM MEMS microphone on a hub-and-spoke
+      PCB layout, sampling at 12-bit depth. I took advantage of the ESP32-S3's dual cores, dedicating
+      one core to SD card logging and the other to audio processing, so neither task blocks the
+      other. The final design is a 4-layer board.</p>`
+  },
+  {
     id: "aquas",
     era: "college",
     title: "AQUAS Projects",
-    tagline: "Columbia Robotics Club",
+    tagline: "Motor driver with an integrated buck converter for an autonomous underwater vehicle's propulsion system.",
+    date: "2025–Present",
+    tags: ["PCB Design", "Buck Converters", "Waterproof Design", "Team Lead"],
     thumbnail: "photos/aquas-thumbnail.jpg",
     thumbnailAlt: "AQUAS Projects",
-    cardText: `AQUAS is a robotics group at Columbia University focused on aquatic robotics. Since 2025,
-      I have served as the electrical lead, designing PCBs, teaching members, and collaborating across
-      mechanical and software teams.`,
+    cardText: "Motor driver with an integrated buck converter for an autonomous underwater vehicle's propulsion system.",
     heroImage: "photos/aquaspage.png",
     heroAlt: "Aquas PCB",
     overview: `<p>The AQUAS club is dedicated to building autonomous aquatic vehicles that can perform
@@ -88,10 +147,12 @@ const PROJECTS = [
     id: "hackathon",
     era: "college",
     title: "Columbia Hackathon",
-    tagline: "A project built in 24 hours at the 2025 Columbia Engineering Hackathon",
+    tagline: "Self stabilizing camera gimbal running a closed loop PID controller.",
+    date: "Spring 2025",
+    tags: ["IMU", "Motor Driver", "Arduino Nano", "Rapid Prototyping"],
     thumbnail: "photos/Hackathonthumbnail-page.JPG",
     thumbnailAlt: "Hackathon",
-    cardText: "Competed in the 2025 Columbia Hackathon, where I helped create a self-stabilizing gimbal for camera and film applications.",
+    cardText: "Self stabilizing camera gimbal running a closed loop PID controller.",
     heroImage: "photos/Hackathonthumbnail-page.JPG",
     heroAlt: "Hackathon Gimbal",
     overview: `<p>For the 2025 Columbia Engineering Hackathon, I worked with a team of 4 other students
@@ -109,12 +170,14 @@ const PROJECTS = [
     id: "arcademachine",
     era: "college",
     title: "Arcade Machine",
-    tagline: "A simplified arcade machine",
+    tagline: "Final project for an Electrical Engineering class: a fully working arcade machine, built end to end.",
+    date: "Fall 2025",
+    tags: ["Arduino Mega", "Perfboard", "Team Project", "Game Design"],
     thumbnail: "photos/ArcadeMachine.JPEG",
     thumbnailAlt: "Arcade Machine",
-    cardText: "Designed and built an arcade machine with a team of 5 students. Games include Snake, Tetris, Pong, and Beat Stacker.",
-    heroImage: "photos/arcademachine.png",
-    heroAlt: "Arcade Machine PCB",
+    cardText: "Final project for an Electrical Engineering class: a fully working arcade machine, built end to end.",
+    heroImage: "photos/ArcadeMachine.JPEG",
+    heroAlt: "Arcade Machine",
     overview: `<p>For my final project in an introductory Art of Engineering course, I worked with a team
       of 5 people to design an arcade machine that could run numerous arcade games.</p>`,
     technical: `<p>Growing up, seeing my grandparents was always a treat — not just for the company, but
@@ -131,10 +194,12 @@ const PROJECTS = [
     id: "tonepedal",
     era: "highschool",
     title: "Electric Guitar Pedal",
-    tagline: "A custom-built guitar effects pedal",
+    tagline: "A run of pedal builds across high school, from simple amplifiers through a Boss DS-1 clone to a tremolo pedal and a distortion pedal.",
+    date: "2024",
+    tags: ["LM386", "NE5532", "Germanium Diodes", "Analog Audio"],
     thumbnail: "photos/tonepedal.jpg",
     thumbnailAlt: "Tone Pedal",
-    cardText: "Born out of a desire to build a custom guitar pedal with a unique sound. I reverse engineered the Boss DS-1 and other legacy pedal circuits to create my very own.",
+    cardText: "A run of pedal builds across high school, from simple amplifiers through a Boss DS-1 clone to a tremolo pedal and a distortion pedal.",
     heroImage: "photos/tonepedal-page.jpg",
     heroAlt: "Tone Pedal",
     overview: `<p>For this project, I designed and built a custom guitar effects pedal. The pedal includes
@@ -155,10 +220,12 @@ const PROJECTS = [
     id: "lightpulser",
     era: "highschool",
     title: "Light Pulser",
-    tagline: "An integrated analog processing and microcontroller project",
+    tagline: "LED driver that reacts to the volume and frequency of music, an early hands on introduction to frequency spectrum analysis and FFTs.",
+    date: "2023",
+    tags: ["TL072", "Arduino Nano", "FFT", "LED Control"],
     thumbnail: "photos/Light Pulser.jpg",
     thumbnailAlt: "Light Pulser",
-    cardText: "Designed a light pulser that creates rhythmic lighting effects synchronized to music, for stage performances and home entertainment.",
+    cardText: "LED driver that reacts to the volume and frequency of music, an early hands on introduction to frequency spectrum analysis and FFTs.",
     heroImage: "photos/lightpulser-page.png",
     heroAlt: "Light Pulser",
     overview: `<p>A device that flashes lights in response to sound.</p>`,
@@ -179,10 +246,12 @@ const PROJECTS = [
     id: "equalizer",
     era: "highschool",
     title: "Analog Equalizer",
-    tagline: "A simple adventure in analog processing",
+    tagline: "Fully breadboarded 3 band analog equalizer.",
+    date: "2022",
+    tags: ["NE5532", "Band-pass Filters", "Analog Design"],
     thumbnail: "photos/Equalizer.JPEG",
     thumbnailAlt: "Equalizer",
-    cardText: "My first project in analog circuits. I was frustrated with digital equalizers when listening to music, so I built my own.",
+    cardText: "Fully breadboarded 3 band analog equalizer.",
     heroImage: "photos/equalizer-page.png",
     heroAlt: "Equalizer",
     overview: `<p>A project born from frustration in my music production workflow. I wanted a simple,
@@ -203,19 +272,5 @@ const PROJECTS = [
       correctly. About 20 minutes of research later, I realized I had accidentally created a simple radio.
       The op amp was amplifying radio signals from the air and sending them to the speaker. I was amazed —
       and it sparked a lasting interest in radio and wireless communication.</p>`
-  },
-  {
-    id: "react-emg-v2",
-    era: "college",
-    title: "React EMG (v2)",
-    tagline: "Redesigned BLE motor driver PCB for prosthetic hand control",
-    thumbnail: "photos/react-emg-v2-thumbnail.png",
-    thumbnailAlt: "React EMG (v2) Thumbnail",
-    cardText: "A second-revision PCB for the ReactEMG prosthetic hand — improved power stability, ghost-movement fixes, and cleaner motor control.",
-    heroImage: "photos/react-emg-v2-hero.png",
-    heroAlt: "React EMG (v2) Hero",
-    overview: `<p>This compact, two-layer controller provides a filtered power stage and dual-channel motor driving capabilities to enable precise BLE-based robotic manipulation.</p>`,
-    technical: `<p>When I set out to build the MyHand BLE interface board, my goal was to bridge a Seeed Xiao ESP32-C6 with the high-power demands of a motor and a linear actuator. One of the first hurdles I faced was power stability; early on, I realized the MCU would brown out during motor spikes. I solved this by adding a beefy 220µF bulk capacitor and specific filtering caps (C7, C8) to keep the 12V line clean. I also had to make a tough call on the voltage regulation. While a buck converter is more efficient, I opted for an L7805 linear regulator to save space—a trade-off that worked perfectly since the MCU’s current draw is relatively low.</p>
-      <p>The motor control side brought its own set of "learning moments." I originally struggled with the motor drivers because the DRV8871 current-limit pins (ILIM) can’t be left floating, or the chip won't play nice. I calculated and settled on 80kΩ resistors for R1 and R2 to keep the torque right where it needs to be. I also learned a lesson in "ghost" movements: the ESP32-C6 pulls its TX/RX pins high on startup, which caused the motors to twitch unexpectedly. To fix this, I remapped the actuator and motor controls to dedicated, non-special GPIO pins to ensure the hand stays still until I actually tell it to move.</p>`
   }
 ];

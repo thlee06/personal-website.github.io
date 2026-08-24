@@ -1,57 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Archive | Theodore Lee</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects — Teddy Lee</title>
+  <link rel="stylesheet" href="ds/styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
-        <ul class="nav-links">
-            <li><a href="index.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
 
-    <main class="archive" id="archive"></main>
+  <nav class="site-nav-sticky">
+    <div class="site-nav-inner">
+      <a class="navlink nav-brand" href="index.html">Teddy Lee</a>
+      <span style="display: flex; flex-wrap: wrap; gap: var(--space-6);">
+        <a class="navlink" href="index.html#about">About</a>
+        <a class="navlink active" href="projects.html">Projects</a>
+        <a class="navlink" href="contact.html">Contact</a>
+      </span>
+    </div>
+  </nav>
 
-    <script src="projects.js"></script>
-    <script src="script.js"></script>
-    <script>
-        const archive = document.getElementById('archive');
+  <main class="content-wrap projects-list">
+    <h1 style="margin: 0 0 var(--space-8); font-family: var(--font-heading); font-weight: 700; font-size: clamp(34px, 5vw, 48px);">Projects</h1>
+    <div id="project-listing"></div>
+  </main>
 
-        ERAS.forEach(era => {
-            const projects = PROJECTS.filter(p => p.era === era.id);
-            if (!projects.length) return;
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-links">
+        <a href="https://github.com/TeddyFive">GitHub</a>
+        <a href="https://www.linkedin.com/in/theodore-lee-0b0476293/">LinkedIn</a>
+      </span>
+      <span class="footer-copy">&copy; Teddy Lee 2026</span>
+    </div>
+  </footer>
 
-            const section = document.createElement('section');
-            section.className = 'era-section' + (era.cssClass ? ' ' + era.cssClass : '');
-
-            section.innerHTML = `
-                <div class="era-header">
-                    <h2>${era.label}</h2>
-                    <span>${era.years}</span>
-                </div>
-                <div class="project-grid">
-                    ${projects.map(p => `
-                        <a href="project.html?id=${p.id}" class="project-link">
-                            <div class="project-card">
-                                <img src="${p.thumbnail}" alt="${p.thumbnailAlt}">
-                                <div class="project-info">
-                                    <h3>${p.title}</h3>
-                                    <p>${p.cardText}</p>
-                                </div>
-                            </div>
-                        </a>
-                    `).join('')}
-                </div>
-            `;
-
-            archive.appendChild(section);
-        });
-    </script>
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

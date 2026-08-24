@@ -1,36 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | Theodore Lee</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teddy Lee — Electrical Engineering</title>
+  <link rel="stylesheet" href="ds/styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-    <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Theodore Lee<span>.</span></a></div>
-    <ul class="nav-links">
-        <li><a href="index.html">About</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="contact.html">Contact</a></li> </ul>
-</nav>
 
-    <header class="about-hero">
-        <div class="hero-image">
-            <img src="photos/Theodore-Lee-Headshot.png" alt="Me" width="1536" height="1024">
-        </div>
-        <div class="hero-content">
-            <h1>Hey, I'm Teddy.</h1>
-            <div class="story-text">
-                <p>I am an electrical engineering student at Columbia University.</p>
-                <p>Since 15, I have explored the intersection of hardware and software. I specialize in embedded systems, analog and digital circuit design, and microcontroller programming.</p>
-                <p>Outside of development, you can find me playing guitar, wandering around lower Manhattan, or in the gym.</p>
-                <p>Beyond reading datasheets and applying Ohm's law, I've built up an intuitive understanding of circuits from years of hands-on tinkering.</p>
-                <p>I pride myself on a genuine passion for electrical engineering and the satisfaction of bringing ideas to life through circuit design and implementation.</p>
-            </div>
-            <a href="projects.html" class="btn">Browse My Journey</a>
-        </div>
-    </header>
-    <script src="script.js"></script>
+  <nav class="site-nav" id="main-nav">
+    <div class="site-nav-inner">
+      <a class="navlink nav-brand" href="index.html">Teddy Lee</a>
+      <span style="display: flex; flex-wrap: wrap; gap: var(--space-6);">
+        <a class="navlink" href="#about">About</a>
+        <a class="navlink" href="projects.html">Projects</a>
+        <a class="navlink" href="contact.html">Contact</a>
+      </span>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img class="hero-bg" src="photos/pcb-hero.png" alt="">
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1>Teddy Lee</h1>
+      <hr class="hero-rule">
+      <p class="hero-subtitle">Electrical Engineering @<br>Columbia University</p>
+    </div>
+    <a class="hero-cta" href="projects.html">
+      Selected works
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </a>
+  </header>
+
+  <main class="content-wrap">
+    <section id="selected-works" style="padding-bottom: calc(var(--space-8) * 2); scroll-margin-top: 76px;">
+      <h2 class="section-label">Selected works</h2>
+      <div id="featured-projects"></div>
+      <a class="btn btn-ghost" href="projects.html">All projects &#8594;</a>
+    </section>
+
+    <section id="about" style="padding-bottom: calc(var(--space-8) * 2); scroll-margin-top: 76px;">
+      <h2 class="section-label">About</h2>
+      <p class="about-text">
+        Electrical engineering at Columbia University, class of 2029. Since 15, I've explored the
+        intersection of hardware and software — specializing in embedded systems, analog and digital
+        circuit design, and PCB layout. Most of what I know came from mixed-signal boards that
+        didn't work the first time.
+      </p>
+      <p class="about-text">
+        Beyond reading datasheets and applying Ohm's law, I've built up an intuitive understanding
+        of circuits from years of hands-on tinkering. I pride myself on a genuine passion for
+        electrical engineering and the satisfaction of bringing ideas to life through circuit design.
+      </p>
+      <p class="about-skills">
+        KiCad &middot; Altium &middot; LTspice &middot; Arduino &middot; embedded C &middot; SPI, I&sup2;C &middot; Python &middot; MATLAB &middot; scope &amp; spectrum analyzers
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-links">
+        <a href="https://github.com/TeddyFive">GitHub</a>
+        <a href="https://www.linkedin.com/in/theodore-lee-0b0476293/">LinkedIn</a>
+      </span>
+      <span class="footer-copy">&copy; Teddy Lee 2026</span>
+    </div>
+  </footer>
+
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
