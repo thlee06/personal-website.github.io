@@ -7,6 +7,73 @@ const ERAS = [
 // ─── Project data ─────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
+    id: "fft-visualizer",
+    era: "college",
+    title: "FPGA FFT Visualizer",
+    tagline: "Real-time audio spectrum visualizer on an FPGA, taking audio in through an ADC, running a 1024-point FFT in hardware, and driving an 8×8 LED display.",
+    date: "2026",
+    tags: ["Verilog", "FPGA", "FFT", "XADC", "Pipelining", "Vivado"],
+    thumbnail: "photos\\FFT_schem.png",
+    thumbnailAlt: "FPGA FFT Visualizer running on a Basys 3 board",
+    cardText: "Real-time audio spectrum visualizer on an FPGA, taking audio in through an ADC, running a 1024-point FFT in hardware, and driving an 8×8 LED display.",
+    heroImage: "photos\\FFT_schem.png",
+    heroAlt: "FPGA FFT Visualizer running on a Basys 3 board",
+    video: "Videos\\IMG_3813.MP4",
+    overview: `<p>As an engineer who also produces music, one of the concepts that appeals to me most is
+      frequency band occupation — the idea that no two tracks should compete for the listener's
+      attention in the same frequency band. The main tool to visualize this is the FFT: it takes a
+      signal and plots its frequency content, showing which frequencies peak and where. This is key
+      to mixing.</p>
+      <p>Ableton's built-in FFT visualizer works, but its ~300 ms latency creates a noticeable gap
+      between what I hear and what I see. Having been learning Verilog for about 3 months, this was
+      exactly the kind of problem an FPGA could solve — real-time, zero-latency spectrum analysis
+      in hardware.</p>`,
+    technical: `<p>For a couple months, I have been producing music. Being an engineer, the part that
+      really appeals to me is music production theory — the concepts and rules that explain how we
+      listen to music, and why we like what we like. One of the core tenants of this theory is
+      frequency band occupation. When we, as humans, listen to a piece of music, there are often
+      multiple tracks occupying similar frequencies, all vying for our attention. A kick drum has a
+      sharp transient and occupies a 20–40 Hz range. The sub-bass might occupy a frequency 10 Hz
+      above that. The important take-away from this is that no two tracks should be competing for
+      the listener's attention in the same frequency band. Synths that occupy human vocal bands will
+      drown out whichever track is quieter.</p>
+      <p>The main tool to visualize this is called an FFT — fast Fourier transform. It takes a signal
+      (like an audio track), and plots the frequencies as they appear on the frequency spectrum, with
+      their amplitudes on the Y axis, and the frequencies on the X axis. This tool is key to spatially
+      visualizing one's tracks. Seeing which frequencies peak and where — this is key to mixing.</p>
+      <p>Ableton, my audio workstation of choice, has a built-in visualizer in its equalizer tool,
+      which is equally accurate and slow. The latency of the MIDI input and visualizer output is
+      around 300 ms, just enough for my eyes and ears to register a gap between what I see and what
+      I hear on each of my tracks. Fortunately, I've been learning Verilog for about 3 months, and
+      this is just the type of problem an FPGA could handle well.</p>
+      <p>Being my first systems project, I really had no idea where to start. I knew of AMD Vivado's
+      FFT and XADC IP cores that would loosely serve as separate stages within my final design, but
+      no idea how to implement them. I started with the stage in between them. The slowest ODR the
+      ADC can output is around 39 kS/s, which, on a 100 MHz clock cycle, gives me an ADC conversion
+      rate of 48.2 and a clock divider value of 80. Additionally, the XADC has a 12-bit depth, which
+      means the ADC is outputting 468,000 samples per second. The XADC has multiple handshake flags
+      as well: <code>eoc_out</code> signals when the ADC has finished creation of a sample,
+      <code>den</code>, an input wire, initializes the read of the ADC data onto a DRP register, and
+      <code>drdy</code> pulses for a single cycle when data is ready to be read on the DRP bus.</p>
+      <p>The FFT works by taking a batch of ADC samples, and outputting a 48-bit bus: [47:24] being
+      the imaginary, and [23:0] being the real part. The input is real, so the Im input is set to 0.
+      Once the data is ready from the ADC, the FFT will store the ADC sample into an internal
+      register, and the FFT frontend I wrote will count the number of samples that have been written
+      into the FFT, flagging the FFT to start producing an output once the sample count is 1024 and
+      a transfer is ready. There are 1024 bins that can be output to, half representing the real and
+      half representing the complex frequency numbers. At a sample rate of 39 kS/s, and a bin number
+      N = 1024, we have a bin frequency width of about ~39 Hz. Not bad! The samples are output 1 at
+      a time at a resolution of 12 bits, on the Re and Im outputs.</p>
+      <p>The band power accumulator stage comes next; this stage calculates the re² + im² to give a
+      magnitude for power. I envisioned an 8×8 display, so the module divides the 1024 bins down to
+      8 bins, accumulating the power for each one. An important lesson I learned from this is
+      pipelining, the act of delaying control signals to match up with data signals during clock
+      cycles. I only want to add and square data for the band accumulator while the data is coming
+      out of the FFT, which means that the last couple of cycles get cut off from being added once
+      the FFT stops. To combat this, I put the valid signal into two flip-flops, which delay the
+      signal properly.</p>`
+  },
+  {
     id: "daq-board",
     era: "college",
     title: "Multi-sensor DAQ Board",

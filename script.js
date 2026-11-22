@@ -91,6 +91,14 @@
   heroEl.src = project.heroImage;
   heroEl.alt = project.heroAlt;
 
+  if (project.video) {
+    const video = document.createElement('video');
+    video.src = project.video;
+    video.controls = true;
+    video.className = 'detail-hero-video';
+    heroEl.insertAdjacentElement('afterend', video);
+  }
+
   bodyEl.innerHTML = `
     <div>
       <h2 class="detail-section-label">Overview</h2>
