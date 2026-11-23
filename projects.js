@@ -13,10 +13,10 @@ const PROJECTS = [
     tagline: "Real-time audio spectrum visualizer on an FPGA, taking audio in through an ADC, running a 1024-point FFT in hardware, and driving an 8×8 LED display.",
     date: "2026",
     tags: ["Verilog", "FPGA", "FFT", "XADC", "Pipelining", "Vivado"],
-    thumbnail: "photos\\FFT_schem.png",
+    thumbnail: "photos\\signal_chain.png",
     thumbnailAlt: "FPGA FFT Visualizer running on a Basys 3 board",
     cardText: "Real-time audio spectrum visualizer on an FPGA, taking audio in through an ADC, running a 1024-point FFT in hardware, and driving an 8×8 LED display.",
-    heroImage: "photos\\FFT_schem.png",
+    heroImage: "photos\\signal_chain.png",
     heroAlt: "FPGA FFT Visualizer running on a Basys 3 board",
     video: "Videos\\IMG_3813.MP4",
     overview: `<p>As an engineer who also produces music, one of the concepts that appeals to me most is
@@ -71,7 +71,20 @@ const PROJECTS = [
       cycles. I only want to add and square data for the band accumulator while the data is coming
       out of the FFT, which means that the last couple of cycles get cut off from being added once
       the FFT stops. To combat this, I put the valid signal into two flip-flops, which delay the
-      signal properly.</p>`
+      signal properly.</p>
+      <p> I had AI write a quick VGA display driver to test everything on an old monitor. After 
+      powering up the board initially, I quickly discovered that the the FFT was not producing any output.
+      I spent a couple hours debugging and digging through documentation. Fortunately, the fix was a quick pin swap:
+      the Basys documentation had the wrong pinout for the XADC, and I had to swap the pins for the Re and Im outputs. 
+      After that, I was able to see a working FFT on the monitor!</p>
+      <p> As part of the next steps, I am formally verifying the band power and pipeline buffer logic as part of 
+      E6863 "Formal Verification of Hardware and Software Systems" as a final project. Using tools like Cadence's Jasper
+      and YoSys, I am going to be able to formally verify that given a frame size of N, any input sample will be correctly
+      mapped to the correct output bin, and that the pipeline buffer will not drop any samples. This is a great opportunity 
+      to learn more about formal verification, and to ensure that my design is robust and reliable. I am excited to see 
+      how this project evolves and what new challenges I will face as I continue to develop my skills 
+      in FPGA design and digital signal processing.</p>`
+      
   },
   {
     id: "daq-board",

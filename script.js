@@ -88,16 +88,21 @@
       .join('');
   }
 
-  heroEl.src = project.heroImage;
-  heroEl.alt = project.heroAlt;
-
   if (project.video) {
+    heroEl.style.display = 'none';
     const video = document.createElement('video');
     video.src = project.video;
     video.controls = true;
     video.className = 'detail-hero-video';
     heroEl.insertAdjacentElement('afterend', video);
+  } else {
+    heroEl.src = project.heroImage;
+    heroEl.alt = project.heroAlt;
   }
+
+  const technicalImage = project.video && project.heroImage
+    ? `<img class="detail-technical-img" src="${project.heroImage}" alt="${project.heroAlt}">`
+    : '';
 
   bodyEl.innerHTML = `
     <div>
@@ -106,6 +111,7 @@
     </div>
     <div>
       <h2 class="detail-section-label">Technical Details</h2>
+      ${technicalImage}
       ${project.technical}
     </div>
   `;
